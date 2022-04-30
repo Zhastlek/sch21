@@ -1,0 +1,1 @@
+drop table intermediate_bus_station

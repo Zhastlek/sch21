@@ -1,0 +1,72 @@
+{
+    "products": [
+        {
+        "name": "A",
+        "price": 1000
+        },
+        {
+        "name": "B",
+        "price": 2000
+        },
+        {
+        "name": "C",
+        "price": 500
+        },
+        {
+            "name": "A",
+            "price": 1000
+        },
+        {
+            "name": "A",
+            "price": 1000
+        },
+        {
+            "name": "F",
+            "price": 2000
+        },
+        {
+            "name": "K",
+            "price": 1000
+        },
+        {
+            "name": "M",
+            "price": 3000
+        },
+        {
+            "name": "D",
+            "price": 4000
+        },
+        {
+            "name": "E",
+            "price": 3000
+        },
+        {
+            "name": "D",
+            "price": 4000
+        },
+        {
+            "name": "E",
+            "price": 3000
+        },
+        {
+            "name": "T",
+            "price": 1000
+        },
+        {
+            "name": "T",
+            "price": 1000
+        },
+        {
+            "name": "T",
+            "price": 1000
+        },
+        {
+            "name": "T",
+            "price": 1000
+        },
+        {
+            "name": "T",
+            "price": 1000
+        }
+    ]
+}

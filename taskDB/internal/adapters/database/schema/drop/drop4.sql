@@ -1,0 +1,1 @@
+drop table distance_and_time;

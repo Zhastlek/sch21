@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/information" method="post">
+        <input type="text" name="name" placeholder="name passenger">
+        <input type="text" name="departure_city"  placeholder="departure city">
+        <input type="text" name="arrival_city"  placeholder="arrival city">
+        <input type="date" name="trip-start" min="2022-01-01" max="2022-12-31">
+        <input type="checkbox" name="information" value="information"> information flight
+        <input type="submit" name="search">
+    </form>
+    <div>
+        {{$Flights := .Flight}}
+        {{$PossibleFlights := .PossibleFlights}}
+        {{$FullInformation := .FullInformation}}
+        {{if $Flights}}
+        {{range .Flights}}
+        <p>
+        [Номер рейса:] {{.Id}} - [Город отправления:] {{.DepartureCity}} - [Город прибытия:] {{.ArrivalCity}} - [Дата выезда:] {{.StartTrip}} - [расстояния между городами:] {{.Distance}} - [Время в пути:] {{.TravelTime}} -
+            {{if $PossibleFlights}} [количество остановок:] {{.SumStation}}
+            {{if $FullInformation}} {{range .Stations}}
+            <li> [Номер промежуточной станции:] {{.Number}} - [название станции:] {{.NameStation}} - [время преизда:] {{.ArrivalTime}} - [время выезда:] {{.DepartureTime}} </li>
+            {{end}}
+        </p>
+        {{end}}
+        {{end}}
+        {{end}}
+        {{end}}
+    </div>
+</body>
+</html>

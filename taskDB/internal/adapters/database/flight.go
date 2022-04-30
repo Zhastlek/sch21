@@ -3,7 +3,8 @@ package database
 import (
 	"database/sql"
 	"log"
-	"taskDB/internal/model"
+
+	"github.com/Zhastlek/school21/internal/model"
 )
 
 type Storage interface {
@@ -11,6 +12,7 @@ type Storage interface {
 	GetFlightsByDate(flight *model.BusFlight) ([]*model.BusFlight, error)
 	GetInformationFlight(flight *model.BusFlight) ([]*model.BusFlight, error)
 }
+
 type storage struct {
 	db *sql.DB
 }

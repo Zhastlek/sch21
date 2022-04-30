@@ -19,3 +19,10 @@ type IntermediateStation struct {
 	ArrivalTime   string
 	DepartureTime string
 }
+
+type Result struct {
+	Flights         []*BusFlight
+	IsExistFlight   bool
+	PossibleFlights bool
+	FullInformation bool
+}

@@ -3,16 +3,20 @@ package main
 import (
 	"log"
 	"net/http"
-	taskdb "taskDB"
-	"taskDB/internal/adapters/database"
+
+	"github.com/Zhastlek/school21/app"
+	"github.com/Zhastlek/school21/internal/adapters/database"
 )
 
 func main() {
-	//var db *sql.DB
-	db := database.CheckDB()
-	router := taskdb.Config(db)
-	log.Println("port is 8000 listening...")
+	db, err := database.InitDb()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	router := app.Initialize(db)
+	log.Println("Server run  is 8000 port...")
 	if err := http.ListenAndServe(":8000", router); err != nil {
-		log.Printf("%v\n", err)
+		log.Fatal(err)
 	}
 }

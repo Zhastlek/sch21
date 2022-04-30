@@ -1,8 +1,8 @@
 package service
 
-import "taskDB/internal/model"
+import "github.com/Zhastlek/school21/internal/model"
 
-type Service interface {
+type FlightServiceInterface interface {
 	GetAll() ([]*model.BusFlight, error)
 	GetByDate(flight *model.BusFlight) ([]*model.BusFlight, error)
 	GetInformation(flight *model.BusFlight) ([]*model.BusFlight, error)

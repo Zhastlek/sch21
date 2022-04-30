@@ -3,7 +3,6 @@ package database
 import (
 	"database/sql"
 	"io/ioutil"
-	"log"
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -13,78 +12,85 @@ type Database struct {
 	db *sql.DB
 }
 
-func CheckDB() *sql.DB {
-	_, err := os.Stat("./internal/adapters/database/database-flights.db")
+const pathDbFile = "./internal/adapters/database/database-flights.db"
+
+func InitDb() (*sql.DB, error) {
+	_, err := os.Stat(pathDbFile)
 	if os.IsNotExist(err) {
-		createFile()
+		if err = createFile(); err != nil {
+			return nil, err
+		}
 	}
 	var d Database
-	d.open("./internal/adapters/database/database-flights.db")
-	//d.createTable()
+	if err = d.openDbFile(pathDbFile); err != nil {
+		return nil, err
+	}
+	// d.createTable()
 	d.DropTables()
 	if err = d.CreateTable(); err != nil {
-		log.Println(err)
+		return nil, err
 	}
-	d.Insert()
-	return d.db
+	d.InsertDummyData()
+
+	return d.db, nil
 }
 
-func createFile() {
-	file, err := os.Create("./internal/adapters/database/database-flights.db")
+func createFile() error {
+	file, err := os.Create(pathDbFile)
 	if err != nil {
-		log.Fatalf("file doesn't create %v", err)
+		return err
 	}
 	defer file.Close()
+	return nil
 }
 
-func (d *Database) open(file string) {
+func (d *Database) openDbFile(file string) error {
 	var err error
 	d.db, err = sql.Open("sqlite3", file)
 	if err != nil {
-		log.Fatalf("this error is in dbase/open() %v", err)
+		return err
 	}
+	return nil
 }
 
 func (d *Database) CreateTable() error {
 	dir, err := ioutil.ReadDir("./internal/adapters/database/schema/up/")
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 	for _, v := range dir {
 		body, err := ioutil.ReadFile("./internal/adapters/database/schema/up/" + v.Name())
 		if err != nil {
-			log.Println(err)
+			return err
 		}
 		_, err = d.db.Exec(string(body))
-		//log.Println(string(body))
 		if err != nil {
-			log.Println("---->", v.Name(), err)
+			return err
 		}
 	}
 	return nil
 }
 
-func (d *Database) DropTables() {
+func (d *Database) DropTables() error {
 	dir, err := ioutil.ReadDir("./internal/adapters/database/schema/drop/")
 	if err != nil {
-		log.Println(err)
+		return err
 	}
 
 	for _, v := range dir {
 		body, err := ioutil.ReadFile("./internal/adapters/database/schema/drop/" + v.Name())
 		if err != nil {
-			log.Println(err)
+			return err
 		}
-
 		_, err = d.db.Exec(string(body))
 		if err != nil {
-			log.Println(err)
+			return err
 		}
 	}
+	return nil
 }
 
-func (d *Database) Insert() {
+func (d *Database) InsertDummyData() error {
 	_, err := d.db.Exec(`INSERT INTO bus_flights (departure_city, arrival_city,distance, travel_time)
 		VALUES('Almaty', 'Astana', '1200 km', '11:30'),
 			('Astana', 'Almaty', '1200 km', '11:30'),
@@ -93,7 +99,7 @@ func (d *Database) Insert() {
 			('Kokshetau', 'Karaganda', '1500 km', '14:00'),
 			('Aktobe', 'Aktau', '600 km', '6:00');`)
 	if err != nil {
-		log.Printf("%v\n", err)
+		return err
 	}
 
 	_, err = d.db.Exec(`INSERT INTO intermediate_bus_station (id, station,number_station, arrival_time, departure_time)
@@ -107,7 +113,7 @@ func (d *Database) Insert() {
 		       (5, 'Balkhash', 2, '18-30', '19-00'),
 		       (5, 'Balkhash', 3, '20-30', '21-00');`)
 	if err != nil {
-		log.Printf("%v\n", err)
+		return err
 	}
 
 	_, err = d.db.Exec(`INSERT INTO time_flights (id, start_flight)
@@ -118,6 +124,7 @@ func (d *Database) Insert() {
 		       (5, '2022-04-30'),
 		       (6, '2022-04-30');`)
 	if err != nil {
-		log.Printf("-----%v\n", err)
+		return err
 	}
+	return nil
 }

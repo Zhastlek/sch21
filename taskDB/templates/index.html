@@ -16,7 +16,7 @@
         <input type="submit" name="search">
     </form>
     <div>
-        {{$Flights := .Flight}}
+        {{$Flights := .IsExistFlight}}
         {{$PossibleFlights := .PossibleFlights}}
         {{$FullInformation := .FullInformation}}
         {{if $Flights}}

@@ -14,11 +14,11 @@
         },
         {
             "name": "A",
-            "price": 1000
+            "price": 430
         },
         {
             "name": "A",
-            "price": 1000
+            "price": 123
         },
         {
             "name": "F",
@@ -38,7 +38,7 @@
         },
         {
             "name": "E",
-            "price": 3000
+            "price": 12
         },
         {
             "name": "D",
@@ -62,7 +62,7 @@
         },
         {
             "name": "T",
-            "price": 1000
+            "price": 1200
         },
         {
             "name": "T",

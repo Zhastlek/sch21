@@ -1,5 +1,5 @@
-module taskDB
+module github.com/Zhastlek/school21
 
-go 1.18
+go 1.17
 
-require github.com/mattn/go-sqlite3 v1.14.12 // indirect
+require github.com/mattn/go-sqlite3 v1.14.12

@@ -1,49 +1,9 @@
 package adapters
 
 import (
-	"task3/internal/domain"
-	"task3/internal/model"
-	"task3/pkg"
+	"github.com/Zhastlek/school21/internal/model"
+	"github.com/Zhastlek/school21/pkg"
 )
-
-type Calculation interface {
-	Calculation(b *model.Basket) *model.Basket
-}
-
-type total struct {
-	Total domain.Service
-}
-
-func NewTotal(totalService domain.Service) Calculation {
-	return &total{
-		Total: totalService,
-	}
-}
-
-func (t *total) Calculation(b *model.Basket) *model.Basket {
-	b.LinkAB = t.findLinkAB(b)
-	t.Total.DiscountAB(b, b.LinkAB)
-
-	b.LinkDE = t.findLinkDE(b)
-	t.Total.DiscountDE(b, b.LinkDE)
-
-	b.LinkEFG = t.findLinkEFG(b)
-	t.Total.DiscountEFG(b, b.LinkEFG)
-
-	b.LinkAklm = t.findLinkAklm(b)
-	t.Total.DiscountAklm(b, b.LinkAklm)
-
-	amountProducts := t.findBalanceBasket(b)
-	if amountProducts >= 5 {
-		t.Total.DiscountTotalTwelve(b, amountProducts)
-	} else if amountProducts == 4 {
-		t.Total.DiscountTotalTen(b, amountProducts)
-	} else if amountProducts == 3 {
-		t.Total.DiscountTotalFive(b, amountProducts)
-	}
-	t.Total.Total(b)
-	return b
-}
 
 func (t *total) findLinkAB(b *model.Basket) int {
 	var numA, numB, linkAB int

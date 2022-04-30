@@ -1,4 +1,4 @@
-package app
+package domain
 
 func TotalDiscountFiveProcent(num float64) float64 {
 	res := num - (num * 0.05)

@@ -1,3 +1,3 @@
-module task3
+module github.com/Zhastlek/school21
 
 go 1.17

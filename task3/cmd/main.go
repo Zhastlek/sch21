@@ -4,19 +4,20 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"task3/internal/adapters"
-	"task3/internal/domain"
-	"task3/internal/model"
+
+	"github.com/Zhastlek/school21/internal/adapters"
+	"github.com/Zhastlek/school21/internal/domain"
+	"github.com/Zhastlek/school21/internal/model"
 )
 
 func main() {
 	basket := model.NewBasket()
-	basketService := domain.NewService(basket)
+	basketService := domain.NewDiscountService(basket)
 	basketCalculation := adapters.NewTotal(basketService)
 
 	res, _ := os.ReadFile("./input")
 	json.Unmarshal(res, &basket)
 
-	result := basketCalculation.Calculation(basket)
+	result := basketCalculation.CalculateTheDiscount(basket)
 	fmt.Println("result sum---->", result.ResultSum)
 }
